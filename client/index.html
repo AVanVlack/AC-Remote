@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Frigidaire AC</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-circle-slider@1.0.0"></script>
+  </head>
+  <body>
+    <h1>Frigidaire AC Remote</h1>
+    <div class="container-fluid" id="settings">
+      <form id="mode">
+        <h2>Control State</h2>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="off" name="mode" class="custom-control-input" v-model="settings.state" value="off">
+          <label class="custom-control-label" for="off">Off</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="cool" name="mode" class="custom-control-input" v-model="settings.state" value="cool">
+          <label class="custom-control-label" for="cool">Cool</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="eco" name="mode" class="custom-control-input" v-model="settings.state" value="eco">
+          <label class="custom-control-label" for="eco">Eco Cool</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="deh" name="mode" class="custom-control-input" v-model="settings.state" value="deh">
+          <label class="custom-control-label" for="deh">Dehumidifier</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="fan" name="mode" class="custom-control-input" v-model="settings.state" value="fan">
+          <label class="custom-control-label" for="fan">Fan Only</label>
+        </div>
+      </form>
+      <form id="temp">
+        <h2>Temperature</h2>
+        <div class="form-group">
+          <label for="formControlRange">Temperature set to: {{settings.temp}}</label>
+          <circle-slider class="form-control-range"
+                         id="temp"
+                         :min="62"
+                         :max="86"
+                         v-model="settings.temp"
+                         progress-color="blue"
+                         knob-color="blue">
+          </circle-slider>
+          <!-- &#8457 keycode for temp -->
+        </div>
+      </form>
+      <form id="fan">
+        <h2>Fan</h2>
+        <div class="form-group">
+          Speed
+          <div class="custom-control custom-radio">
+            <input type="radio" id="fan-auto" name="fanSpeed" class="custom-control-input" v-model="settings.fan" value="auto">
+            <label class="custom-control-label" for="fan-auto">Auto</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="fan-low" name="fanSpeed" class="custom-control-input" v-model="settings.fan" value="low">
+            <label class="custom-control-label" for="fan-low">Low</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="fan-med" name="fanSpeed" class="custom-control-input" v-model="settings.fan" value="med">
+            <label class="custom-control-label" for="fan-med">Med</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="fan-hi" name="fanSpeed" class="custom-control-input" v-model="settings.fan" value="hi">
+            <label class="custom-control-label" for="fan-hi">Hi</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="fan-swing" true-value="on" false-value="off" v-model="settings.swing">
+            <label class="custom-control-label" for="fan-swing">Swing</label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
+
+<!--
+state: {on: "00100100", off: "00000100"},
+mode: {cool: "11000000", eco: "00000001", deh: "01000000", fan: "11100000"},
+fan: {auto: "000", low: "010", med: "110" ,hi: "101"},
+swing: {on: "11100", off: "00000"}
+-->
