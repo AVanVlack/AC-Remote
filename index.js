@@ -11,8 +11,6 @@ app.use(morgan('dev'))
 app.use(bodyParser.json())
 let blynk = new Blynk.Blynk(process.env.BLYNK_AUTH_KEY);
 
-let state =
-
 app.post('/updateState', (req, res) => {
   console.log(req.body)
   let data = req.body
@@ -40,11 +38,11 @@ var v1 = new blynk.VirtualPin(1);
 var v9 = new blynk.VirtualPin(9);
 
 v1.on('write', function(param) {
-  switch(param) {
-    case 1:
+  switch(param[0]) {
+    case '1':
         update_send_state({power:"off", state:"cool", temp:74, swing:"off", fan: "auto"})
         break;
-    case 2:
+    case '2':
         update_send_state({power:"on", state:"cool", temp:74, swing:"off", fan: "auto"})
         break;
     default:
@@ -62,7 +60,9 @@ v9.on('read', function() {
 // pin 4 - swing: 0=off 1=on
 
 let update_send_state = function (data) {
+  console.log(data)
   let irCode = acIR.buildIR(data)
+  console.log(irCode);
 
   const light = spawn('./light', [irCode.toString()])
   light.stdout.on('data', (data) => {
@@ -75,3 +75,7 @@ let update_send_state = function (data) {
     console.log(`child process exited with code ${code}`);
   });
 }
+
+app.use(express.static('client'))
+
+app.listen(process.env.PORT || 3000, () => console.log('Server started'))
