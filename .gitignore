@@ -4,3 +4,4 @@ npm-debug.log
 .envg
 .DS_Store
 .env
+db
